@@ -19,6 +19,7 @@ public class Workflow {
     private List<Bridge> bridges = new ArrayList<>();
     private List<Object> workflowData = new ArrayList<>();
     private Step currentStep;
+    private String templateId;
 
     public Workflow(){
 

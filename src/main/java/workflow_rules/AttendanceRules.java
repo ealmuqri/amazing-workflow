@@ -39,8 +39,7 @@ public class AttendanceRules implements Rule {
     }
 
     /*
-    TODO
-    Check JAVA Reflections recommendations.
+    TODO:  Check JAVA Reflections recommendations.
      */
 
     public void executeMethods(){
@@ -53,8 +52,7 @@ public class AttendanceRules implements Rule {
 
     }
     /*
-    TODO:
-    Function that will take input list of functions to execute and the functions relation ships. (And, OR)
+    TODO: Function that will take input list of functions to execute and the functions relation ships. (And, OR)
      */
 
     @Override
