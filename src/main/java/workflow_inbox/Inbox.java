@@ -1,6 +1,6 @@
-package workflow_users;
+package workflow_inbox;
 
-import workflow_inbox.Task;
+import workflow_users.User;
 
 import java.util.ArrayList;
 import java.util.List;

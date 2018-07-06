@@ -66,6 +66,7 @@ public class AttendanceRules implements Rule {
     }
 
     public void sampleMethod(List<Object> workflowData){
+
         System.out.println("I got invoked");
         for (Object data: workflowData
              ) {

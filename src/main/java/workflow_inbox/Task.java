@@ -1,5 +1,6 @@
 package workflow_inbox;
 
+import workflow_core.Workflow;
 import workflow_users.User;
 
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ public class Task {
     private String id;
     private String name;
     private List<User> owners = new ArrayList<User>();
+    private Workflow workflow;
+
+
     /**
      * I need from a task to know the following:
      *  - Who are the owners?

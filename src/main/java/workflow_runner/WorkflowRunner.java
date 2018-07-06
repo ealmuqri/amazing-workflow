@@ -18,17 +18,20 @@ public class WorkflowRunner {
             System.out.println("--------------------------------");
             workflow.getCurrentStep().runStep();
             executeCurrentStepBridges(workflow);
-        }else
-        System.out.println("=-==-=-=- workflow finished -=-=-=-=-=-");
+        }else{
+            System.out.println("=-==-=-=- workflow finished -=-=-=-=-=-");
+        }
+
     }
 
     public void executeCurrentStepBridges(Workflow workflow){
-        List<Bridge> bridges = findSourcePaths(workflow.getCurrentStep(),workflow.getBridges());
+        List<Bridge> bridges = findSourcePaths(workflow.getCurrentStep(),workflow.getWorkflowTemplate().getBridges());
         // Check if no bridges were found and no default path.
         if (bridges.isEmpty() && workflow.getCurrentStep().getDefaultDestination()==null){
             // TODO: This is not valid condition, need review.
             System.out.println("--- Last Step ---");
             workflow.setCurrentStep(null);
+            executeCurrentStep(workflow);
         }
         // Not last step.
         else {
@@ -54,7 +57,7 @@ public class WorkflowRunner {
                 // Only one bridge matches.
                 else{
                     // Determine where the workflow will move to.
-                    for (Path path: workflow.getBridges().get(0).getPaths()){
+                    for (Path path: workflow.getWorkflowTemplate().getBridges().get(0).getPaths()){
                         if (workflow.getCurrentStep().equals(path.getSource()))
                             workflow.setCurrentStep(path.getDestination());
                     }

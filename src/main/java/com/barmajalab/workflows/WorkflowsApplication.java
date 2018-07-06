@@ -11,7 +11,8 @@ public class WorkflowsApplication {
     public static void main(String[] args) {
         SpringApplication.run(WorkflowsApplication.class, args);
         Workflow workflowInstance = new Workflow();
-        workflowInstance = workflowInstance.contructWorkflow("w123","Workflow NAme");
+        // TODO: needs refactoring to convert it to factory method for workflows. Needs to add what template.
+        workflowInstance = workflowInstance.constructWorkflow("w123","Workflow NAme");
 
 
         WorkflowRunner workflowRunner = new WorkflowRunner();
