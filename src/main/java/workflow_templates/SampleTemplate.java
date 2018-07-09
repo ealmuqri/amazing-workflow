@@ -1,7 +1,5 @@
 package workflow_templates;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import workflow_core.*;
 import workflow_rules.AttendanceRules;
 import workflow_rules.EmptyRule;
@@ -83,8 +81,8 @@ public class SampleTemplate implements WorkflowTemplate {
 
         // TODO: Step paths should not point to a step that is not in workflow instance.
 
-        Step step1 = new Step("s1", "step1", StepType.Human);
-        Step step2 = new Step("s2", "step2", StepType.Human);
+        Step step1 = new SystemStep("s1", "step1");
+        Step step2 = new SystemStep("s2", "step2");
 
         // Creating Bridge //
         Path path = new Path(step1,step2);
@@ -96,13 +94,18 @@ public class SampleTemplate implements WorkflowTemplate {
         bridge.addPreRunRule(salaryRule);
 
         // End Creating a Bridge //
-        step1.addRule(attendanceRule);
-        step1.addPostRunRule(emptyRule);
-        step1.addPreRunRule(salaryRule);
+        List<Rule> rules = new ArrayList<Rule>();
+        rules.add(attendanceRule);
+        rules.add(emptyRule);
+        rules.add(salaryRule);
 
-        step2.addRule(attendanceRule);
-        step2.addPostRunRule(emptyRule);
-        step2.addPreRunRule(salaryRule);
+        step1.setRules(rules);
+        step1.setPreRunRules(rules);
+        step1.setPostRunRules(rules);
+
+        step2.setRules(rules);
+        step2.setPreRunRules(rules);
+        step2.setPostRunRules(rules);
 
         List<Step> steps = new ArrayList<>();
         steps.add(step1);

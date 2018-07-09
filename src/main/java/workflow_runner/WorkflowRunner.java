@@ -8,6 +8,9 @@ import workflow_core.Workflow;
 
 public class WorkflowRunner {
 
+    // TODO: To run Human Step from here and assign right people. Leave rule execution to Steps.
+
+
     public void executeNextStep(Workflow workflow) {
         workflow.getCurrentStep().runStep();
     }

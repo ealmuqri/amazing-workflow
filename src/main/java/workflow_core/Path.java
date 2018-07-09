@@ -2,13 +2,12 @@ package workflow_core;
 
 public class Path {
     private Step source;
+    private Step destination;
 
     public Path(Step source, Step destination) {
         this.source = source;
         this.destination = destination;
     }
-
-    private Step destination;
 
     public Step getSource() {
         return source;

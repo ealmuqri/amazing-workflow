@@ -1,12 +1,5 @@
 package workflow_core;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
-import workflow_rules.AttendanceRules;
-import workflow_rules.EmptyRule;
-import workflow_rules.Rule;
-import workflow_rules.SalaryRules;
 import workflow_templates.SampleTemplate;
 import workflow_users.User;
 
@@ -97,6 +90,6 @@ public class Workflow {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
 
 }

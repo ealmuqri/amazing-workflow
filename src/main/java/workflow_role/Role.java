@@ -1,4 +1,4 @@
-package workflow_core;
+package workflow_role;
 
 public interface Role {
 }
