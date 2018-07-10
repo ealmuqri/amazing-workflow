@@ -6,46 +6,35 @@ import workflow_rules.Rule;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SystemStep implements Step{
-
+public class HumanStep implements Step {
     private String id;
     private String name;
     private List<Rule> rules = new ArrayList<>();
     private List<Rule> preRunRules = new ArrayList<>();
     private List<Rule> postRunRules = new ArrayList<>();
-//    private List<Role> roles = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
     private Boolean isBlocker;
     private Step defaultDestination;
 
-    public SystemStep(String id, String name) {
+    @Override
+    public Boolean runStep(List<Object> data) {
+        /**
+         * IDEA:
+         * 1. Run pre-run rules if success then, load UI.
+         * 2. On user submission run rules if success run postRunRules then, return true;
+         */
+        return true;
+    }
+
+    // To run Rules and postRunRules.
+    public Boolean runRules(List<Object> data){
+        return true;
+    }
+
+    public HumanStep(String id, String name) {
         this.id = id;
         this.name = name;
     }
-
-    public Boolean runStep(List<Object> data) {
-
-        System.out.println("========= STEP ("+name+") Started Running =======");
-        for (Rule rule : preRunRules) {
-            System.out.print("Pre Run === "+name+" -> ");
-            rule.executeRule();
-        }
-        for (Rule rule : rules) {
-            System.out.print("Run === "+name+" -> ");
-            rule.executeRule();
-        }
-        for (Rule rule : postRunRules) {
-            System.out.print("Post Run=== "+name+" -> ");
-            rule.executeRule();
-        }
-
-        System.out.println("========= STEP ("+name+") Finished =======");
-
-        return true;
-        /*
-        TODO: Dispatch an event anyone interested. (Pub-Sub Model) for Asynch mode.
-         */
-    }
-
 
     @Override
     public String getId() {
@@ -98,13 +87,23 @@ public class SystemStep implements Step{
     }
 
     @Override
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    @Override
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
     public Boolean getIsBlocker() {
         return isBlocker;
     }
 
     @Override
     public void setIsBlocker(Boolean isBlocker) {
-        isBlocker = isBlocker;
+       this.isBlocker = isBlocker;
     }
 
     @Override
@@ -115,17 +114,5 @@ public class SystemStep implements Step{
     @Override
     public void setDefaultDestination(Step defaultDestination) {
         this.defaultDestination = defaultDestination;
-    }
-
-    @Deprecated
-    @Override
-    public List<Role> getRoles() {
-        return null;
-    }
-
-    @Deprecated
-    @Override
-    public void setRoles(List<Role> roles) {
-
     }
 }

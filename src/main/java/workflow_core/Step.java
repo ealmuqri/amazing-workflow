@@ -1,11 +1,13 @@
 package workflow_core;
 
+import workflow_role.Role;
 import workflow_rules.Rule;
 
 import java.util.List;
 
 public interface Step {
-    public void runStep();
+    // TODO: refactor data List to Key-Value pair.
+    public Boolean runStep(List<Object> data);
 
      public String getId();
      public void setId(String id);
@@ -30,6 +32,9 @@ public interface Step {
 
      public Step getDefaultDestination();
      public void setDefaultDestination(Step step);
+
+     public List<Role> getRoles();
+     public void setRoles(List<Role> roles);
 
 
 }

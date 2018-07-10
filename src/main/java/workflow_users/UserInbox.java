@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserInbox  {
-    private List<Workflow> pending, requested, processed = new ArrayList<>();
+    private List<Workflow> pending = new ArrayList<>(),
+            requested = new ArrayList<>(),
+            processed = new ArrayList<>();
 
     public List<Workflow> getPending() {
         return pending;

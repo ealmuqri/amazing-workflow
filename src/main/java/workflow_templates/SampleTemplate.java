@@ -1,6 +1,8 @@
 package workflow_templates;
 
 import workflow_core.*;
+import workflow_role.DirectManagerRole;
+import workflow_role.Role;
 import workflow_rules.AttendanceRules;
 import workflow_rules.EmptyRule;
 import workflow_rules.Rule;
@@ -81,13 +83,22 @@ public class SampleTemplate implements WorkflowTemplate {
 
         // TODO: Step paths should not point to a step that is not in workflow instance.
 
+        Role directManager = new DirectManagerRole();
+        List<Role> stepRoles = new ArrayList<>();
+        stepRoles.add(directManager);
+
+
         Step step1 = new SystemStep("s1", "step1");
         Step step2 = new SystemStep("s2", "step2");
+        Step step3 = new HumanStep("sh1","step3");
+        step3.setRoles(stepRoles);
 
         // Creating Bridge //
         Path path = new Path(step1,step2);
+        Path path2 = new Path(step2,step3);
         List<Path> paths = new ArrayList<>();
         paths.add(path);
+        paths.add(path2);
         Bridge bridge = new Bridge("b123","bridge1",paths);
         bridge.addBridgeRule(emptyRule);
         bridge.addPostRunRule(emptyRule);
@@ -107,9 +118,14 @@ public class SampleTemplate implements WorkflowTemplate {
         step2.setPreRunRules(rules);
         step2.setPostRunRules(rules);
 
+        step3.setRules(rules);
+        step3.setPreRunRules(rules);
+        step3.setPostRunRules(rules);
+
         List<Step> steps = new ArrayList<>();
         steps.add(step1);
         steps.add(step2);
+        steps.add(step3);
 
         List<Bridge> bridges = new ArrayList<>();
         bridges.add(bridge);

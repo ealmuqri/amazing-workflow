@@ -1,10 +1,10 @@
 package workflow_runner;
 import java.util.ArrayList;
 import java.util.List;
-import workflow_core.Bridge;
-import workflow_core.Path;
-import workflow_core.Step;
-import workflow_core.Workflow;
+
+import workflow_core.*;
+import workflow_role.Role;
+import workflow_users.User;
 
 public class WorkflowRunner {
 
@@ -12,15 +12,30 @@ public class WorkflowRunner {
 
 
     public void executeNextStep(Workflow workflow) {
-        workflow.getCurrentStep().runStep();
+        workflow.getCurrentStep().runStep(workflow.getWorkflowData());
     }
 
     public void executeCurrentStep(Workflow workflow) {
         // Check if the workflow is finished.
         if (workflow.getCurrentStep() != null){
             System.out.println("--------------------------------");
-            workflow.getCurrentStep().runStep();
-            executeCurrentStepBridges(workflow);
+            // To check if current step is System step.
+            if(workflow.getCurrentStep().getClass().equals(SystemStep.class)){
+                System.out.println(workflow.getCurrentStep().getClass());
+                workflow.getCurrentStep().runStep(workflow.getWorkflowData());
+                executeCurrentStepBridges(workflow);
+            }else{
+                System.out.println("==== Human Step ====");
+                List<Role> roles = workflow.getCurrentStep().getRoles();
+                for (Role role: roles) {
+                    for(User user: role.getRoleUsers()){
+                        user.getUserInbox().addPending(workflow);
+                        System.out.println(user.getUserInbox().getPending().get(0).getName());
+                    }
+                }
+                executeCurrentStepBridges(workflow);
+            }
+
         }else{
             System.out.println("=-==-=-=- workflow finished -=-=-=-=-=-");
         }
