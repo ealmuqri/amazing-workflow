@@ -14,6 +14,15 @@ public class Workflow {
     private Step currentStep;
     private WorkflowTemplate workflowTemplate;
     private User requester;
+    private List<Object> actionData;
+
+    public List<Object> getActionData() {
+        return actionData;
+    }
+
+    public void setActionData(List<Object> actionData) {
+        this.actionData = actionData;
+    }
 
     public Workflow(){
 

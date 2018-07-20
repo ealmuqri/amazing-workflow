@@ -12,7 +12,7 @@ public class WorkflowRunner {
 
 
     public void executeNextStep(Workflow workflow) {
-        workflow.getCurrentStep().runStep(workflow.getWorkflowData());
+        workflow.getCurrentStep().runStep(workflow.getWorkflowData(),workflow.getActionData());
     }
 
     public void executeCurrentStep(Workflow workflow) {
@@ -22,18 +22,18 @@ public class WorkflowRunner {
             // To check if current step is System step.
             if(workflow.getCurrentStep().getClass().equals(SystemStep.class)){
                 System.out.println(workflow.getCurrentStep().getClass());
-                workflow.getCurrentStep().runStep(workflow.getWorkflowData());
+                workflow.getCurrentStep().runStep(workflow.getWorkflowData(), workflow.getActionData());
                 executeCurrentStepBridges(workflow);
             }else{
                 System.out.println("==== Human Step ====");
-                List<Role> roles = workflow.getCurrentStep().getRoles();
-                for (Role role: roles) {
-                    for(User user: role.getRoleUsers()){
-                        user.getUserInbox().addPending(workflow);
-                        System.out.println(user.getUserInbox().getPending().get(0).getName());
-                    }
+                List<User> users = workflow.getCurrentStep().getRole().getRoleUsers();
+
+                for(User user: users){
+                    user.getUserInbox().addPending(workflow);
+                    System.out.println(user.getUserInbox().getPending().get(0).getName());
                 }
-                executeCurrentStepBridges(workflow);
+
+                //executeCurrentStepBridges(workflow);
             }
 
         }else{
@@ -75,15 +75,43 @@ public class WorkflowRunner {
                 // Only one bridge matches.
                 else{
                     // Determine where the workflow will move to.
-                    for (Path path: workflow.getWorkflowTemplate().getBridges().get(0).getPaths()){
-                        if (workflow.getCurrentStep().equals(path.getSource()))
+                    for (Path path: activeBridges.get(0).getPaths()){
+                        if (workflow.getCurrentStep().equals(path.getSource())){
+                            System.out.println("Current Step: "+workflow.getCurrentStep().getName() + " Source: "+ path.getSource().getName());
                             workflow.setCurrentStep(path.getDestination());
+                            System.out.println("Destination: "+ path.getDestination().getName());
+                            break;
+                        }
+
                     }
                 }
             }
             executeCurrentStep(workflow);
         }
 
+
+    }
+
+    /**
+     * Function to run Pre-Run rules before loading UI component for end-user.
+     *
+     */
+    public void loadUIComponent(Workflow workflow){
+        workflow.getCurrentStep().preRunStep(workflow.getWorkflowData());
+        String UIComponentId = workflow.getCurrentStep().getRole().getUIComponentId();
+        System.out.println("===--== LOADING "+UIComponentId+" ==--===");
+    }
+
+    public void handleUserAction(Workflow workflow, List<Object> actionData){
+        workflow.setActionData(actionData);
+        if (workflow.getCurrentStep().runStep(workflow.getWorkflowData(),workflow.getActionData())){
+            workflow.setActionData(null);
+            executeCurrentStepBridges(workflow);
+        }
+        // If rules result is false.
+        else {
+
+        }
 
     }
 

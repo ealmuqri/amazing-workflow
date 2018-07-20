@@ -22,7 +22,7 @@ public class SystemStep implements Step{
         this.name = name;
     }
 
-    public Boolean runStep(List<Object> data) {
+    public Boolean runStep(List<Object> data, List<Object> actionData) {
 
         System.out.println("========= STEP ("+name+") Started Running =======");
         for (Rule rule : preRunRules) {
@@ -44,6 +44,16 @@ public class SystemStep implements Step{
         /*
         TODO: Dispatch an event anyone interested. (Pub-Sub Model) for Asynch mode.
          */
+    }
+
+    @Override
+    public Boolean preRunStep(List<Object> data) {
+        System.out.println("========= STEP ("+name+") Pre Run Rules =======");
+        for (Rule rule : preRunRules) {
+            System.out.print("Pre Run === "+name+" -> ");
+            rule.executeRule();
+        }
+        return true;
     }
 
 
@@ -117,15 +127,14 @@ public class SystemStep implements Step{
         this.defaultDestination = defaultDestination;
     }
 
-    @Deprecated
     @Override
-    public List<Role> getRoles() {
+    public Role getRole() {
         return null;
     }
 
-    @Deprecated
     @Override
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Role role) {
 
     }
+
 }

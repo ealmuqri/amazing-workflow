@@ -84,14 +84,13 @@ public class SampleTemplate implements WorkflowTemplate {
         // TODO: Step paths should not point to a step that is not in workflow instance.
 
         Role directManager = new DirectManagerRole();
-        List<Role> stepRoles = new ArrayList<>();
-        stepRoles.add(directManager);
+
 
 
         Step step1 = new SystemStep("s1", "step1");
         Step step2 = new SystemStep("s2", "step2");
         Step step3 = new HumanStep("sh1","step3");
-        step3.setRoles(stepRoles);
+        step3.setRoles(directManager);
 
         // Creating Bridge //
         Path path = new Path(step1,step2);

@@ -12,22 +12,53 @@ public class HumanStep implements Step {
     private List<Rule> rules = new ArrayList<>();
     private List<Rule> preRunRules = new ArrayList<>();
     private List<Rule> postRunRules = new ArrayList<>();
-    private List<Role> roles = new ArrayList<>();
+    private Role role;
     private Boolean isBlocker;
     private Step defaultDestination;
 
     @Override
-    public Boolean runStep(List<Object> data) {
-        /**
-         * IDEA:
-         * 1. Run pre-run rules if success then, load UI.
-         * 2. On user submission run rules if success run postRunRules then, return true;
-         */
+    public Boolean runStep(List<Object> data, List<Object> actionData) {
+        System.out.println("========= Human STEP ("+name+") Started Running =======");
+
+        for (Rule rule : rules) {
+            System.out.print("Run === "+name+" -> ");
+            rule.executeRule();
+        }
+        for (Rule rule : postRunRules) {
+            System.out.print("Post Run=== "+name+" -> ");
+            rule.executeRule();
+        }
+
+        System.out.println("========= STEP ("+name+") Finished =======");
+
         return true;
     }
 
     // To run Rules and postRunRules.
-    public Boolean runRules(List<Object> data){
+//    public Boolean runRules(List<Object> data){
+//
+//        System.out.println("========= Human STEP ("+name+") Started Running =======");
+//
+//        for (Rule rule : rules) {
+//            System.out.print("Run === "+name+" -> ");
+//            rule.executeRule();
+//        }
+//        for (Rule rule : postRunRules) {
+//            System.out.print("Post Run=== "+name+" -> ");
+//            rule.executeRule();
+//        }
+//
+//        System.out.println("========= STEP ("+name+") Finished =======");
+//
+//        return true;
+//    }
+    @Override
+    public Boolean preRunStep(List<Object> data) {
+        System.out.println("========= Human STEP ("+name+") Pre Run Rules =======");
+        for (Rule rule : preRunRules) {
+            System.out.print("Pre Run === "+name+" -> ");
+            rule.executeRule();
+        }
         return true;
     }
 
@@ -86,15 +117,6 @@ public class HumanStep implements Step {
         this.postRunRules = postRunRules;
     }
 
-    @Override
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    @Override
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 
     @Override
     public Boolean getIsBlocker() {
@@ -114,5 +136,16 @@ public class HumanStep implements Step {
     @Override
     public void setDefaultDestination(Step defaultDestination) {
         this.defaultDestination = defaultDestination;
+    }
+
+    @Override
+    public Role getRole() {
+        return role;
+    }
+
+    @Override
+    public void setRoles(Role role) {
+        this.role=role;
+
     }
 }
