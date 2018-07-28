@@ -1,7 +1,10 @@
 package workflow_rules;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class SalaryRules implements Rule{
     private String id, name;
 

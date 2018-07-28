@@ -2,10 +2,12 @@ package workflow_runner;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import workflow_core.*;
 import workflow_role.Role;
 import workflow_users.User;
 
+@Component
 public class WorkflowRunner {
 
     // TODO: To run Human Step from here and assign right people. Leave rule execution to Steps.

@@ -1,9 +1,12 @@
 package workflow_rules;
 
+import org.springframework.stereotype.Component;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+@Component
 public class AttendanceRules implements Rule {
     private String id, name;
 

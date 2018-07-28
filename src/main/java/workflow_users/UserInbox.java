@@ -1,10 +1,12 @@
 package workflow_users;
 
+import org.springframework.stereotype.Component;
 import workflow_core.Workflow;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserInbox  {
     private List<Workflow> pending = new ArrayList<>(),
             requested = new ArrayList<>(),

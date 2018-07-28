@@ -1,5 +1,6 @@
 package workflow_inbox;
 
+import org.springframework.stereotype.Component;
 import workflow_core.Workflow;
 import workflow_users.User;
 
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * A task is a unit of work that must be done by a human (manual work).
  */
+@Component
 public class Task {
     private String id;
     private String name;

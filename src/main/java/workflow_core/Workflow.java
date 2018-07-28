@@ -1,11 +1,13 @@
 package workflow_core;
 
+import org.springframework.stereotype.Component;
 import workflow_templates.SampleTemplate;
 import workflow_users.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class Workflow {
     private String ID;
     private String name;

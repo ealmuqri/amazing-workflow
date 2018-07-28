@@ -1,5 +1,8 @@
 package workflow_core;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Path {
     private Step source;
     private Step destination;

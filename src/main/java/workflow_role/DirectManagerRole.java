@@ -1,10 +1,12 @@
 package workflow_role;
 
+import org.springframework.stereotype.Component;
 import workflow_users.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class DirectManagerRole implements Role{
     private String roleId;
     private String UIComponentId;

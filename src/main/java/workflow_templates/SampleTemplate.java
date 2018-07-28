@@ -1,5 +1,6 @@
 package workflow_templates;
 
+import org.springframework.stereotype.Component;
 import workflow_core.*;
 import workflow_role.DirectManagerRole;
 import workflow_role.Role;
@@ -11,6 +12,7 @@ import workflow_rules.SalaryRules;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SampleTemplate implements WorkflowTemplate {
     private String id="w123";
     private String name = "sample workflow";

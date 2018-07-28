@@ -1,10 +1,12 @@
 package workflow_core;
 
+import org.springframework.stereotype.Component;
 import workflow_rules.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class Bridge {
     private String ID;
     private String name;

@@ -1,11 +1,13 @@
 package workflow_core;
 
+import org.springframework.stereotype.Component;
 import workflow_role.Role;
 import workflow_rules.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class HumanStep implements Step {
     private String id;
     private String name;
